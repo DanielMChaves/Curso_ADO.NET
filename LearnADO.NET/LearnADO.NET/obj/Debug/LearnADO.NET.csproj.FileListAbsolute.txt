@@ -4,3 +4,9 @@ C:\Workspace\Tutoriales\LearnADO.NET\LearnADO.NET\bin\Debug\LearnADO.NET.pdb
 C:\Workspace\Tutoriales\LearnADO.NET\LearnADO.NET\obj\Debug\LearnADO.NET.csprojResolveAssemblyReference.cache
 C:\Workspace\Tutoriales\LearnADO.NET\LearnADO.NET\obj\Debug\LearnADO.NET.exe
 C:\Workspace\Tutoriales\LearnADO.NET\LearnADO.NET\obj\Debug\LearnADO.NET.pdb
+C:\Users\Daniel Melero Chaves\Google Drive\Git\GitHub\Curso_ADO.NET\LearnADO.NET\LearnADO.NET\bin\Debug\LearnADO.NET.exe.config
+C:\Users\Daniel Melero Chaves\Google Drive\Git\GitHub\Curso_ADO.NET\LearnADO.NET\LearnADO.NET\obj\Debug\LearnADO.NET.exe
+C:\Users\Daniel Melero Chaves\Google Drive\Git\GitHub\Curso_ADO.NET\LearnADO.NET\LearnADO.NET\obj\Debug\LearnADO.NET.pdb
+C:\Users\Daniel Melero Chaves\Google Drive\Git\GitHub\Curso_ADO.NET\LearnADO.NET\LearnADO.NET\bin\Debug\LearnADO.NET.exe
+C:\Users\Daniel Melero Chaves\Google Drive\Git\GitHub\Curso_ADO.NET\LearnADO.NET\LearnADO.NET\bin\Debug\LearnADO.NET.pdb
+C:\Users\Daniel Melero Chaves\Google Drive\Git\GitHub\Curso_ADO.NET\LearnADO.NET\LearnADO.NET\obj\Debug\LearnADO.NET.csprojResolveAssemblyReference.cache

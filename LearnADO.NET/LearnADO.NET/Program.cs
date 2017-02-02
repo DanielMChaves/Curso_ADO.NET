@@ -5,7 +5,7 @@ namespace LearnADO.NET
 {
     class DataBaseController
     {
-        SqlConnection conexion;
+        static SqlConnection conexion;
 
         public DataBaseController()
         {
@@ -14,160 +14,7 @@ namespace LearnADO.NET
             conexion = new SqlConnection(
                 "Data Source=.\\sqlexpress;Initial Catalog=wingtiptoys;Integrated Security=SSPI");
         }
-
-        /*
-         * EJECUCIÓN DE UNA CONSULTA
-         */
-        public void ReadData()
-        {
-            Console.WriteLine("[INFO]: Función 'ReadData()': Inicio\n");
-
-            SqlDataReader reader = null;
-
-            try
-            {
-                // (2) Abrimos la Conexión ...
-                Console.WriteLine("(2) Abrimos la Conexión ...\n");
-                conexion.Open();
-
-                // (3) Preparamos la Query ...
-                Console.WriteLine("(3) Preparamos la Query ...\n");
-                SqlCommand query = new SqlCommand("select CategoryName from Categories", conexion);
-
-                // (4) Usamos la Conexión ...
-                Console.WriteLine("(4) Usamos la Conexión ...\n");
-
-                //  (4.1) Ejecutamos la Query ...
-                Console.WriteLine(" (4.1) Ejecutamos la Query ...\n");
-                reader = query.ExecuteReader();
-
-                //  (4.2) Imprimimos los Resultados ...
-                Console.WriteLine(" (4.2) Imprimimos los Resultados ...\n");
-                while (reader.Read())
-                {
-                    Console.WriteLine(reader[0]);
-                }
-                Console.WriteLine();
-
-            }
-            finally
-            {
-                //  (4.3) Cerramos el Lector ...
-                Console.WriteLine(" (4.3) Cerramos el Lector ...\n");
-                if (reader != null) reader.Close();
-
-                // (5) Cerramos la Conexión ...
-                Console.WriteLine("(5) Cerramos la Conexión ...\n");
-                if (conexion != null) conexion.Close();
-
-                Console.WriteLine("[INFO]: Función 'ReadData()': Fin\n");
-            }
-        }
-
-        /// <summary>
-        /// use ExecuteNonQuery method for Insert
-        /// </summary>
-        public void Insertdata()
-        {
-            try
-            {
-                // Open the connection
-                conexion.Open();
-
-                // prepare command string
-                string insertString = @"
-                 insert into Categories
-                 (CategoryName, Description)
-                 values ('Miscellaneous', 'Whatever doesn''t fit elsewhere')";
-
-                // 1. Instantiate a new command with a query and connection
-                SqlCommand cmd = new SqlCommand(insertString, conexion);
-
-                // 2. Call ExecuteNonQuery to send command
-                cmd.ExecuteNonQuery();
-            }
-            finally
-            {
-                // Close the connection
-                if (conexion != null)
-                {
-                    conexion.Close();
-                }
-            }
-        }
-
-        /// <summary>
-        /// use ExecuteNonQuery method for Update
-        /// </summary>
-        public void UpdateData()
-        {
-            try
-            {
-                // Open the connection
-                conexion.Open();
-
-                // prepare command string
-                string updateString = @"
-                update Categories
-                set CategoryName = 'Other'
-                where CategoryName = 'Miscellaneous'";
-
-                // 1. Instantiate a new command with command text only
-                SqlCommand cmd = new SqlCommand(updateString);
-
-                // 2. Set the Connection property
-                cmd.Connection = conexion;
-
-                // 3. Call ExecuteNonQuery to send command
-                cmd.ExecuteNonQuery();
-            }
-            finally
-            {
-                // Close the connection
-                if (conexion != null)
-                {
-                    conexion.Close();
-                }
-            }
-        }
-
-        /// <summary>
-        /// use ExecuteNonQuery method for Delete
-        /// </summary>
-        public void DeleteData()
-        {
-            try
-            {
-                // Open the connection
-                conexion.Open();
-
-                // prepare command string
-                string deleteString = @"
-                 delete from Categories
-                 where CategoryName = 'Other'";
-
-                // 1. Instantiate a new command
-                SqlCommand cmd = new SqlCommand();
-
-                // 2. Set the CommandText property
-                cmd.CommandText = deleteString;
-
-                // 3. Set the Connection property
-                cmd.Connection = conexion;
-
-                // 4. Call ExecuteNonQuery to send command
-                cmd.ExecuteNonQuery();
-            }
-            finally
-            {
-                // Close the connection
-                if (conexion != null)
-                {
-                    conexion.Close();
-                }
-            }
-        }
-
+        
         public static void Main(string[] args)
         {
 
@@ -175,28 +22,49 @@ namespace LearnADO.NET
             
             Console.WriteLine("[INFO]: Categorías antes de insertar\n");
 
-            // Ejecutamos el método de lectura
-            controller.ReadData();
+            // Obtenemos las categorías
+            Query.GetCategoriesNames(conexion);
 
             // Ejecutamos el método de inserción
-            controller.Insertdata();
+            Insert.InsertData(conexion);
             Console.WriteLine("[INFO]: Categorías después de insertar\n");
-            
-            // Ejecutamos el método de lectura
-            controller.ReadData();
+
+            // Obtenemos las categorías
+            Query.GetCategoriesNames(conexion);
 
             // Ejecutamos el método de actualizar
-            controller.UpdateData();
+            Update.UpdateData(conexion);
             
             Console.WriteLine("[INFO]: Categorías después de actualizar\n");
-            controller.ReadData();
+            Query.GetCategoriesNames(conexion);
 
             // Ejecutamos el método de eliminación
-            controller.DeleteData();
+            Delete.DeleteData(conexion);
             Console.WriteLine("[INFO]: Categorías después de eliminar\n");
 
-            // Ejecutamos el método de lectura
-            controller.ReadData();
+            // Obtenemos las categorías
+            Query.GetCategoriesNames(conexion);
+
+            // Obtenemos el número de categorias
+            int numberOfRecords = Query.GetNumberCategories(conexion);
+            
+            Console.WriteLine("Número de Categorías: {0}\n", numberOfRecords);
+
+            // Obtenemos todos los productos con toda su información
+            Console.WriteLine("[INFO]: Todos los productos\n");
+            Query.GetProductsAll(conexion);
+
+            // Obtenemos todos los productos con ID de categoria 5
+            Console.WriteLine("[INFO]: Todos los productos con ID de categoria 5\n");
+            Query.GetProductsByCategotyID(conexion, 5);
+
+            // Obtenemos el Top 10 de los productos más caros
+            Console.WriteLine("[INFO]: Top 10 de los productos más caros\n");
+            Query.GetTop10ExpensiveProducts(conexion);
+
+            // Obtenemos el producto más caro con ID de categoria 1
+            Console.WriteLine("[INFO]: El producto más caro con ID de categoria 1\n");
+            Query.GetExpensiveProductByCategory(conexion, 1);
 
             Console.WriteLine("Fin");
             Console.Read();
